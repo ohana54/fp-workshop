@@ -18,10 +18,19 @@ const {
 } = require('./posts')
 
 const {
+  addComment,
+  deleteComment,
+  getComment,
+  getCommentsForPost,
+  updateComment
+} = require('./comments')
+
+const {
   addAuthor,
   deleteAuthor,
   getAuthor,
   getAuthors,
+  getCommentsForAuthor,
   getPostsForAuthor,
   updateAuthor
 } = require('./authors')
@@ -51,6 +60,15 @@ module.exports = {
         .delete(deletePost)
         .put(jsonParser, updatePost)
       app
+        .route('/posts/:postId/comments')
+        .get(getCommentsForPost)
+        .post(jsonParser, addComment)
+      app
+        .route('/posts/:postId/comments/:commentIdx')
+        .get(getComment)
+        .delete(deleteComment)
+        .put(jsonParser, updateComment)
+      app
         .route('/authors/')
         .get(getAuthors)
         .post(jsonParser, addAuthor)
@@ -60,6 +78,7 @@ module.exports = {
         .delete(deleteAuthor)
         .put(jsonParser, updateAuthor)
       app.route('/authors/:authorId/posts').get(getPostsForAuthor)
+      app.route('/authors/:authorId/comments').get(getCommentsForAuthor)
 
       return stoppable(http.createServer(app), 0)
     }).then(srv => {
