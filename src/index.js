@@ -17,6 +17,15 @@ const {
   updatePost
 } = require('./posts')
 
+const {
+  addAuthor,
+  deleteAuthor,
+  getAuthor,
+  getAuthors,
+  getPostsForAuthor,
+  updateAuthor
+} = require('./authors')
+
 let server = Nothing()
 module.exports = {
   start: siteData =>
@@ -41,6 +50,16 @@ module.exports = {
         .get(getPost)
         .delete(deletePost)
         .put(jsonParser, updatePost)
+      app
+        .route('/authors/')
+        .get(getAuthors)
+        .post(jsonParser, addAuthor)
+      app
+        .route('/authors/:authorId')
+        .get(getAuthor)
+        .delete(deleteAuthor)
+        .put(jsonParser, updateAuthor)
+      app.route('/authors/:authorId/posts').get(getPostsForAuthor)
 
       return stoppable(http.createServer(app), 0)
     }).then(srv => {
