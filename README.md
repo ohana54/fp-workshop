@@ -40,4 +40,4 @@ can be further extracted to additional functions.
 
 ## Get Started
 
-Run `npm i && npm run start`, then move to each next stage using `npm run next`.
+Run `npm i && npm start`, then move to each next stage using `npm run next`.
